@@ -10,21 +10,17 @@
    </head>
    <body>
     <div class="container">
-
       <div class="page-header">
         <h1>Twittler</h1>
       </div>
 
       <div class="tweet-head">
-        <h2>Tweet Feed</h2>
-        <button type="button" class="btn btn-defualt btn-sm" id="generate" style="float: right;">
-          <span class="glyphicon glyphicon-fire" aria-hidden="true"></span>View More Fake Tweets!
+        <button type="button" class="btn btn-defualt btn-sm" id="generate">
+        View More Fake Tweets!
         </button>
       </div>
 
       <div id="twitterFeed"></div>
-      <div id="userFeed"></div>
-
     </div>
 
     <footer class="footer">
@@ -37,36 +33,6 @@
      <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
  <script>
  $(document).ready(function(){
-   var $tweets = $('#twitterFeed');
-
-
-   function display(){
-   var index = streams.home.length - 7;
-
-   while(index >= 0){
-     var tweet = streams.home[index];
-     var user = '<a href="#" class="username" style="font-size: 17px">' + '@' + tweet.user + '</a>';
-     var message = '<i style="font-size: 17px">' + tweet.message + '</i>';
-     var timestamp = '<h6 class="timestamp">' + moment(tweet.created_at).fromNow() + '</h6>';
-     var $tweet = $('<div class="tweetz"></div>');
-     $tweet.html(user + ': ' + message + timestamp);
-     $tweet.appendTo($tweets);
-     index -= 1;
-   }
- }
-
-    display();
-
-    $('#generate').on('click', function() {
-       display();
-    })
-
-    var $user = $('.username');
-
-    $user.on('click', function() {
-       console.log(user);
-
-    })
 
  });
  </script>
