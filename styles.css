@@ -24,3 +24,16 @@ body {
 .container .text-muted {
   margin: 20px 0;
 }
+
+.user {
+   font-size: 17px;
+}
+
+.message {
+   font-size: 17px;
+   font-style: italic;
+}
+
+.timestamp {
+
+}

@@ -15,13 +15,17 @@
       </div>
 
       <div class="tweet-head">
-        <button type="button" class="btn btn-defualt btn-sm" id="generate">
+        <button type="button" class="btn btn-primary btn-sm" id="generate">
         View More Fake Tweets!
+        </button>
+         <button type="button" class="btn btn-danger btn-sm" id="back">
+        Back To Feed
         </button>
       </div>
 
-      <div id="twitterFeed"></div>
-    </div>
+      <div class="main"></div>
+
+      </div>
 
     <footer class="footer">
       <div class="container">
@@ -33,8 +37,55 @@
      <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
  <script>
  $(document).ready(function(){
+  var tweetRefresh = streams.home;
+
+  function reveal(tweets) {
+    clear();
+    tweetRefresh = tweets;
+    var index = tweets.length - 1;
+    console.log(tweets)
+    while(index >= 0) {
+      var tweet = tweets[index];
+      var $tweet = $('<div></div>');
+      var test = '@' + tweet.user;
+      $tweet.html(test.link("#") + ': ' + '<i>' + tweet.message + '</i>' + ' ' + '<h6>' +moment(tweet.created_at).fromNow() + '<h6>')
+      $tweet
+        .attr("id", tweet.user)
+      $tweet.on('click', function() {
+
+        reveal(streams.users[this.id]);
+      })
+      $tweet.appendTo('.main')
+      index -= 1;
+    }
+  }
+
+  function clear() {
+    var node = $('.main')[0]
+    while(node.firstChild) {
+      node.removeChild(node.firstChild);
+    }
+  }
+
+  function refresh() {
+    reveal(tweetRefresh)
+  }
+
+  setTimeout(refresh, 1000 * 60);
+
+  reveal(streams.home); 
+
+  $('#generate').on('click', function() {
+    reveal(streams.home);
+  })
+
+  $('#back').on('click', function() {
+    reveal(streams.home);
+  })
 
  });
  </script>
    </body>
  </html>
+
+
