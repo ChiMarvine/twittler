@@ -5,8 +5,11 @@
      <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap.min.css">
      <link rel="stylesheet" href="bower_components/bootstrap/dist/css/bootstrap-theme.min.css">
      <link rel="stylesheet" href="styles.css"/>  
+     <link href='http://fonts.googleapis.com/css?family=Nunito' rel='stylesheet' type='text/css'>
      <script src="data_generator.js"></script>
      <script src="moment.min.js"></script>
+     <script src="jquery.js"></script>
+     <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
    </head>
    <body>
     <div class="container">
@@ -15,26 +18,18 @@
       </div>
 
       <div class="tweet-head">
-        <button type="button" class="btn btn-primary btn-sm" id="generate">
-        View More Fake Tweets!
+        <button type="button" class="btn btn-info btn-sm" id="generate">
+          <span class="glyphicon glyphicon-menu-hamburger" aria-hidden="true"></span> Fake Tweets 
         </button>
-         <button type="button" class="btn btn-danger btn-sm" id="back">
-        Back To Feed
+
+        <button type="button" class="btn btn-info btn-sm" id="back">
+          <span class="glyphicon glyphicon-backward" aria-hidden="true"></span> Back to Feed
         </button>
       </div>
 
       <div class="main"></div>
+    </div>
 
-      </div>
-
-    <footer class="footer">
-      <div class="container">
-        <p class="text-muted">Fake Tweets All Day Long</p>  
-      </div>
-    </footer>
-
-     <script src="jquery.js"></script>
-     <script src="bower_components/bootstrap/dist/js/bootstrap.min.js"></script>
  <script>
  $(document).ready(function(){
   var tweetRefresh = streams.home;
@@ -43,22 +38,27 @@
     clear();
     tweetRefresh = tweets;
     var index = tweets.length - 1;
-    console.log(tweets)
+
     while(index >= 0) {
       var tweet = tweets[index];
       var $tweet = $('<div></div>');
-      var test = '@' + tweet.user;
-      $tweet.html(test.link("#") + ': ' + '<i>' + tweet.message + '</i>' + ' ' + '<h6>' +moment(tweet.created_at).fromNow() + '<h6>')
-      $tweet
-        .attr("id", tweet.user)
-      $tweet.on('click', function() {
+      var person = '@' + tweet.user;
+      var username = person.link("#");   
+      var message = '<i class="message">' + tweet.message + '</i>';
+      var timestamp = '<h6 class="timestamp">' + moment(tweet.created_at).fromNow() + '<h6>';
 
-        reveal(streams.users[this.id]);
-      })
-      $tweet.appendTo('.main')
+      $tweet.html(username + ': ' + message + ' ' + timestamp)
+      $tweet.attr("id", tweet.user)
+            .on('click', function() {
+              reveal(streams.users[this.id]);
+              $('#back').show();
+            });
+      $tweet.appendTo('.main');
       index -= 1;
     }
   }
+
+  reveal(streams.home); 
 
   function clear() {
     var node = $('.main')[0]
@@ -73,19 +73,15 @@
 
   setTimeout(refresh, 1000 * 60);
 
-  reveal(streams.home); 
-
   $('#generate').on('click', function() {
     reveal(streams.home);
   })
 
   $('#back').on('click', function() {
     reveal(streams.home);
+    $('#back').hide();
   })
-
  });
  </script>
    </body>
  </html>
-
-
